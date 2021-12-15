@@ -1,0 +1,144 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Food Classification</title>
+</head>
+<style>
+	body {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+		background: linear-gradient(45deg, greenyellow, dodgerblue);
+		font-family: "Sansita Swashed", cursive;
+	  }
+	  .center {
+		position: relative;
+		padding: 50px 50px;
+		background: #fff;
+		border-radius: 10px;
+	  }
+	  .center img{
+		width: 100px;
+		margin: auto;
+		display: block;
+	  }
+	  .center h1 {
+		font-size: 2em;
+		border-left: 5px solid dodgerblue;
+		padding: 10px;
+		color: #000;
+		letter-spacing: 5px;
+		margin-bottom: 30px;
+		font-weight: bold;
+		padding-left: 10px;
+	  }
+	  .center .inputbox {
+		position: relative;
+		width: 300px;
+		height: 50px;
+		margin-bottom: 30px;
+	  }
+	  .center .inputbox input,.textarea {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		border: 2px solid dodgerblue;
+		outline: none;
+		background: none;
+		padding: 10px;
+		border-radius: 10px;
+		font-size: 1.2em;
+	  }
+	  .center .inputbox:last-child {
+		margin-bottom: 150px;
+	  }
+	  .center .inputbox span {
+		position: absolute;
+		top: 14px;
+		left: 20px;
+		font-size: 1em;
+		transition: 0.6s;
+		font-family: sans-serif;
+	  }
+	  .center .inputbox input:focus ~ span,
+	  .center .inputbox input:valid ~ span {
+		transform: translateX(-13px) translateY(-35px);
+		font-size: 1em;
+	  }
+	  .center .inputbox [type="button"] , .center .inputbox [type="submit"] {
+		width: 50%;
+		background: dodgerblue;
+		color: #fff;
+		border: #fff;
+		display: inline-block;
+	  }
+	  .center .inputbox [type="button"]:hover ,  .center .inputbox [type="submit"]:hover {
+		background: linear-gradient(45deg, greenyellow, dodgerblue);
+	  }
+	  
+	  #search{
+		left: 170px;
+	  }
+</style>
+<body>
+	<div class="center">
+		<img src="images/logo.png" alt="">
+		<h1>  Text classified</h1>
+<form id="DataForm">
+	<div class="inputbox">
+		<input type="text" name="statement" id='statement' required="required">
+		<span>Enter your text to be classified</span>
+	  </div>
+	  <div class="inputbox">
+		<input type="submit" value="Search" id='search'>
+		<input type="button" value='Reset' onclick="ClearData() ">
+
+	</div>
+	<span>Result</span>
+	<div class="inputbox">
+<textarea id='returnedValue' class='textarea' rows='10'>
+</textarea>
+
+
+</div>
+	
+</form> 
+</div>
+<script >
+	const GetFormData = document.querySelector('#DataForm');
+const restbtn = document.querySelector('#reset');
+const searchbtn = document.querySelector('#search');
+const SetTextarea = document.querySelector('#returnedValue');
+searchbtn.addEventListener('click', async function (e) {
+	e.preventDefault();
+	const Getvalue = document.querySelector('#statement').value;
+    const data =  { Getvalue };
+
+    const options = {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data), 
+    }
+    const response = await fetch('/api',options)
+	const data2 = await response.json();
+	
+		if(data2 == '') data2 = 'No match.';
+		SetTextarea.innerHTML=data2.values;
+} );
+
+function ClearData() {
+	document.getElementById("DataForm").reset();
+	SetTextarea.innerHTML = null;
+  }
+</script>
+</body>
+
+</html> 
