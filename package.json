@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "eslint index.js",
-    "test:coveralls": "npx jest --coverage && cat ./coverage/lcov.info | npx coveralls"
+    "test": "eslint index.js"
+    
   },
   "keywords": [],
   "author": "",
